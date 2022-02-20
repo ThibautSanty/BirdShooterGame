@@ -1,0 +1,135 @@
+@keyframes flying {
+    from { transform: translate(100.55px , 1.774px) rotate(30deg);}
+    to {transform: translate(100.55px , 1.774px) rotate(-15deg);}
+}
+@keyframes scaleDown {
+    from { transform: scale(1);}
+    to { transform: scale(0);}
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+body {
+    background-image: url(./Assets/background.jpg);
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.color-red {
+    fill: #f14a4a;
+}
+.color-white {
+    fill: #EDEBED;
+}
+
+.container-header {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 0 32px;
+    z-index: 1000;
+}
+.container-header > .container-hearts {
+    display: inline-flex;
+}
+.container-header > .container-hearts > svg {
+    margin-right: 8px;
+}
+.container-header > .container-hearts > svg:last-child() {
+    margin-right: 0px;
+}
+.container-header > .container-time {
+    width: 30vw;
+    height: 8px;
+    border-radius: 9px;
+    position: relative;
+    border: 5px solid #000;
+    background-color: #EDEBED;
+}
+.container-header > .container-time > .time-active {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 4px;
+    background-color: #F830FF;
+    transition: width 1s linear;
+}
+.container-header > #score {
+    font-size: 40px;
+    font-weight: bolder;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: #EDEBED;
+    -webkit-text-stroke: 1px #000;
+}
+
+#hunter {
+    width: 15vw;
+    height: auto;
+    position: absolute;
+    bottom: -50px;
+    right: 0;
+    z-index: 500;
+}
+#hunter-body {
+    position: absolute;
+    height: 550px;
+    width: 215px;
+    bottom: 0;
+    right: 0;
+}
+#hunter-weapon {
+    position: absolute;
+    bottom: 100px;
+    right: 70px;
+    transform-origin: 95% 60%;
+}
+
+.container-bird {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    transition: 100ms linear;
+}
+.container-bird svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 50% 50%;
+    overflow: visible;
+}
+
+#net {
+    width: 200px;
+    height: 200px;
+    transform-origin: 50% 100%;
+    animation: scaleDown 300ms linear 0s 1 normal forwards;
+    z-index: 1000;
+}
+
+
+.anim-flying {
+    animation: flying 500ms linear 0s infinite alternate;
+    transform-origin: 0% 50%;
+}
+.display-none {
+    display: none;
+}
