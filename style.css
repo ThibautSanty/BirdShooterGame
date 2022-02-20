@@ -6,6 +6,10 @@
     from { transform: scale(1);}
     to { transform: scale(0);}
 }
+@keyframes aim {
+    from { transform: rotate(-30deg); }
+    to { transform: rotate(30deg); }
+}
 
 html, body {
     margin: 0;
@@ -93,6 +97,7 @@ body {
     bottom: 100px;
     right: 70px;
     transform-origin: 95% 60%;
+    animation: aim 1s linear 0s infinite alternate;
 }
 
 .container-bird {
@@ -105,7 +110,7 @@ body {
     border: none;
     padding: 0;
     margin: 0;
-    transition: 100ms linear;
+    transition: left 100ms linear , top .5s linear ;
 }
 .container-bird svg {
     width: 100%;

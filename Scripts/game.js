@@ -7,6 +7,7 @@ const audioNet = new Audio("./Sounds/net.mp3");
 const elementTimer = document.getElementById("time");
 var time = 10; // 1 minute in seconds
 var seconds = 0;
+var score = 0;
 var running = false;
 var birds = new Array();
 var colors = ['#DD2E44' , '#DD2EB4' , '#A32EDD' , '#442EDD' ,'#2E7ADD' , '#469F6D' , '#8F9B8B' , '#E2F655' , '#E96F04'];
@@ -180,6 +181,7 @@ function GenerateBird(color , colorAccent , size , direction , step){
 
     // create the animation for the bird
     birds.push(setInterval(UpdateBird , 100 , [ birdContainer , direction , step]))
+    birdContainer.addEventListener('click' , function() { CaptureBird(birdContainer) } );
 }
 function Generator(){
     let randomColor = colors[Math.round(Math.random() * (colors.length - 1) )];
@@ -203,6 +205,20 @@ function ThrowNet(){
 	document.body.appendChild(net);
     setTimeout( function() { document.body.removeChild(document.getElementById("net")); } , 500);
 }
+function CaptureBird(obj){
+    
+    console.log("[CaptureBird] ("+ obj.getAttribute("data") +") bird was captured");
+    clearInterval(birds[obj.getAttribute("data")]);
+    obj.children[0].classList.add("display-none");
+    obj.children[1].classList.remove("display-none");
+    obj.style.top = window.visualViewport.height + "px";
+    score += 100;
+    document.getElementById("score").innerHTML = score;
+    setTimeout( RemoveBird , 500 , obj );
+}
+function Hunter(){
+    
+}
 
 // main
 window.addEventListener("click" , ThrowNet);
@@ -211,5 +227,4 @@ let generator = setInterval( Generator , 1000);
 
 
 // TO DO
-// create a capture function for the birds you capture
 // create the hunter function with the generator
