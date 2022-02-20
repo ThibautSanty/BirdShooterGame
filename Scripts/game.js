@@ -5,9 +5,11 @@ const audioWeapon = new Audio("./Sounds/explosion.mp3");
 const audioHunter = new Audio("./Sounds/hunter.mp3");
 const audioNet = new Audio("./Sounds/net.mp3");
 const elementTimer = document.getElementById("time");
-var time = 10; // 1 minute in seconds
+var time = 60; // 1 minute in seconds
 var seconds = 0;
 var score = 0;
+var hunterActive = false;
+var hunterTimeout;
 var running = false;
 var birds = new Array();
 var colors = ['#DD2E44' , '#DD2EB4' , '#A32EDD' , '#442EDD' ,'#2E7ADD' , '#469F6D' , '#8F9B8B' , '#E2F655' , '#E96F04'];
@@ -190,6 +192,13 @@ function Generator(){
     let randomStep = Math.round(Math.random() * 100 ) + 50;
     console.log(randomColor , randomWidth , randomDirection , randomStep);
     GenerateBird( randomColor , '#000000' , randomWidth , randomDirection , randomStep);
+
+    // set hunter chance
+    if ( (Math.round(Math.random() * 10 ) > 7 ) && !hunterActive ){
+        hunterActive = true;
+        SetHunter(Math.round(Math.random() * 1000 ) + 2000 );
+    }
+
 }
 function ThrowNet(){
     let mouseX = window.event.clientX;
@@ -216,15 +225,46 @@ function CaptureBird(obj){
     document.getElementById("score").innerHTML = score;
     setTimeout( RemoveBird , 500 , obj );
 }
-function Hunter(){
-    
+function ShotBird(obj){
+    console.log("[ShotBird] bird "+ obj.getAttribute("data") +" was shot by the hunter");
+    let x = obj.getBoundingClientRect().left + (obj.getBoundingClientRect().width / 2);
+    let y = obj.getBoundingClientRect().top + (obj.getBoundingClientRect().height / 2);
+    let explosion = document.createElement("img");
+    explosion.setAttribute("src" , "./Assets/explosion.png");
+    explosion.setAttribute("id" , "explosion");
+    explosion.style.left = x + "px";
+    explosion.style.top = y + "px";
+    RemoveBird(obj);
+    document.body.appendChild(explosion);
+    setTimeout( function() {
+        explosion.remove();
+    } , 1000 );
+
+}
+function SetHunter(timeShot){
+    console.log("[SetHunter] hunter is active and will shot in " + timeShot.toString());
+    document.getElementById("hunter").style.bottom = "-50px";
+    hunterTimeout = setTimeout( function() {
+
+        console.log("[HunterShot] hunter shot a bird");
+        let currentBirds = document.querySelectorAll("button");
+        let selectRandomBird = Math.round( Math.random() * (currentBirds.length - 1) );
+        ShotBird( currentBirds.item(selectRandomBird) );
+        RemoveHunter();
+
+    } , timeShot);
+}
+function RemoveHunter(){
+    console.log("[RemoveHunter] hunter removed");
+    document.getElementById("hunter").style.bottom = - document.getElementById("hunter").getBoundingClientRect().height + "px";
+    hunterActive = false;
+    // remove the hunter timeout
+    clearTimeout(hunterTimeout);
 }
 
 // main
 window.addEventListener("click" , ThrowNet);
+document.getElementById("hunter").style.bottom = -(document.getElementById("hunter").getBoundingClientRect().height).toString() + "px";
+document.getElementById("hunter").addEventListener("click" , RemoveHunter);
 let timer = setInterval(Timer, 1000);
 let generator = setInterval( Generator , 1000);
-
-
-// TO DO
-// create the hunter function with the generator
