@@ -4,12 +4,17 @@ const audioBird = new Audio("./Sounds/bird.mp3");
 const audioWeapon = new Audio("./Sounds/explosion.mp3");
 const audioHunter = new Audio("./Sounds/hunter.mp3");
 const audioNet = new Audio("./Sounds/net.mp3");
+const audioBackground = new Audio("./Sounds/background.mp3");
+audioBackground.loop = true;
+audioBackground.volume = 0.1;
 const elementTimer = document.getElementById("time");
 var time = 60; // 1 minute in seconds
 var seconds = 0;
 var score = 0;
 var hunterActive = false;
 var hunterTimeout;
+var timerInterval;
+var generatorInterval;
 var running = false;
 var birds = new Array();
 var colors = ['#DD2E44' , '#DD2EB4' , '#A32EDD' , '#442EDD' ,'#2E7ADD' , '#469F6D' , '#8F9B8B' , '#E2F655' , '#E96F04'];
@@ -25,9 +30,7 @@ function Timer(){
     }
     else{
         console.log("[game] (timer) timer ended, game stopped");
-        console.log(birds);
-        clearInterval(generator);
-        clearInterval(timer);
+        stop();
     }
 }
 function RemoveBird(obj){
@@ -190,7 +193,6 @@ function Generator(){
     let randomWidth = Math.round(Math.random() * 150 ) + 100;
     let randomDirection = directions[Math.round(Math.random())];
     let randomStep = Math.round(Math.random() * 100 ) + 50;
-    console.log(randomColor , randomWidth , randomDirection , randomStep);
     GenerateBird( randomColor , '#000000' , randomWidth , randomDirection , randomStep);
 
     // set hunter chance
@@ -217,6 +219,7 @@ function ThrowNet(){
 function CaptureBird(obj){
     
     console.log("[CaptureBird] ("+ obj.getAttribute("data") +") bird was captured");
+    audioEarning.play();
     clearInterval(birds[obj.getAttribute("data")]);
     obj.children[0].classList.add("display-none");
     obj.children[1].classList.remove("display-none");
@@ -235,21 +238,28 @@ function ShotBird(obj){
     explosion.style.left = x + "px";
     explosion.style.top = y + "px";
     RemoveBird(obj);
+    audioWeapon.play();
     document.body.appendChild(explosion);
+    if (score >= 100){
+        score -= 100;
+        document.getElementById("score").innerHTML = score;
+    }
     setTimeout( function() {
         explosion.remove();
     } , 1000 );
-
 }
 function SetHunter(timeShot){
     console.log("[SetHunter] hunter is active and will shot in " + timeShot.toString());
     document.getElementById("hunter").style.bottom = "-50px";
+    audioHunter.play();
     hunterTimeout = setTimeout( function() {
 
         console.log("[HunterShot] hunter shot a bird");
-        let currentBirds = document.querySelectorAll("button");
-        let selectRandomBird = Math.round( Math.random() * (currentBirds.length - 1) );
-        ShotBird( currentBirds.item(selectRandomBird) );
+        let currentBirds = document.getElementsByClassName("container-bird");
+        if (currentBirds.length != 0){
+            let selectRandomBird = Math.round( Math.random() * (currentBirds.length - 1) );
+            ShotBird( currentBirds.item(selectRandomBird) );
+        }
         RemoveHunter();
 
     } , timeShot);
@@ -261,10 +271,31 @@ function RemoveHunter(){
     // remove the hunter timeout
     clearTimeout(hunterTimeout);
 }
+function Start(){
+    seconds = 0;
+    elementTimer.style.width = "100%";
+    document.getElementById("overlay").classList.add("display-none");
+    audioBackground.play();
+    window.addEventListener("click" , ThrowNet);
+    timerInterval = setInterval(Timer, 1000);
+    generatorInterval = setInterval( Generator , 1000);
+}
+function stop(){
+    audioBackground.pause();
+    document.getElementById("overlay").classList.remove("display-none");
+    window.removeEventListener("click" , function(){});
+    clearInterval(generatorInterval);
+    clearInterval(timerInterval);
+    clearTimeout(hunterTimeout);
+    if (hunterActive){
+        RemoveHunter();
+    }
+    document.getElementById("overlay").children[0].innerHTML = "your score: " + score.toString();
+    document.getElementById("btn-start").innerHTML = "play again";
+    
+}
 
 // main
-window.addEventListener("click" , ThrowNet);
 document.getElementById("hunter").style.bottom = -(document.getElementById("hunter").getBoundingClientRect().height).toString() + "px";
 document.getElementById("hunter").addEventListener("click" , RemoveHunter);
-let timer = setInterval(Timer, 1000);
-let generator = setInterval( Generator , 1000);
+document.getElementById("btn-start").addEventListener("click" , Start);
