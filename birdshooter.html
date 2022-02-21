@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="description" content="Believe an experience with tech you would never think of">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="msapplication-TileColor" content="#F5F5F5">
+    <meta name="theme-color" content="#F5F5F5">
+    <meta name="keywords" content="tech, game, kinect, ball, wall"/>
+	<meta name="subject" content="wall game">
+    <title>bird shooter</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- <link rel="icon" href=""> -->
+</head>
+<body>
+
+    <!-- header -->
+    <div class="container-header">
+        <div class="container-hearts">
+            <svg id="heart-1" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+                <g transform="translate(-445 -1946.171)">
+                    <rect width="100" height="100" transform="translate(445 1946.171)" fill="none"/>
+                    <path class="color-red" d="M256.082,1907.671l.006-.006a22.216,22.216,0,0,1,31.406-31.406l.005-.005.005.005a22.216,22.216,0,0,1,31.407,31.407l.006.006L287.5,1939.089Z" transform="translate(207.5 93.541)" stroke="#000" stroke-width="5"/>
+                </g>
+            </svg>
+            <svg id="heart-2" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+                <g transform="translate(-445 -1946.171)">
+                    <rect width="100" height="100" transform="translate(445 1946.171)" fill="none"/>
+                    <path class="color-red" d="M256.082,1907.671l.006-.006a22.216,22.216,0,0,1,31.406-31.406l.005-.005.005.005a22.216,22.216,0,0,1,31.407,31.407l.006.006L287.5,1939.089Z" transform="translate(207.5 93.541)" stroke="#000" stroke-width="5"/>
+                </g>
+            </svg>
+            <svg id="heart-3" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+                <g transform="translate(-445 -1946.171)">
+                    <rect width="100" height="100" transform="translate(445 1946.171)" fill="none"/>
+                    <path class="color-red" d="M256.082,1907.671l.006-.006a22.216,22.216,0,0,1,31.406-31.406l.005-.005.005.005a22.216,22.216,0,0,1,31.407,31.407l.006.006L287.5,1939.089Z" transform="translate(207.5 93.541)" stroke="#000" stroke-width="5"/>
+                </g>
+            </svg>
+        </div>
+        <div class="container-time">
+            <div id="time" class="time-active"></div>
+        </div>
+        <h1 id="score">0</h1>
+    </div>
+
+    <!-- hunter -->
+    <div id="hunter">
+        <img id="hunter-body" src="./Assets/hunter.png" alt="">
+        <img id="hunter-weapon" src="./Assets/weapon.png" alt="">
+    </div>
+
+    <!-- overlay -->
+    <div id="overlay">
+        <h1>Bird Shooter</h1>
+        <p>Try to capture as many birds as you can before the hunter can take one. You have 1 minute to try a highscore. If the hunter shots a bird you loose 100 points. If you capture a bird, you gain 100 points.</p>
+        <button id="btn-start">let us play</button>
+    </div>
+
+    <script src="./Scripts/game.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+@keyframes flying {
+    from { transform: translate(100.55px , 1.774px) rotate(30deg);}
+    to {transform: translate(100.55px , 1.774px) rotate(-15deg);}
+}
+@keyframes scaleDown {
+    from { transform: scale(1);}
+    to { transform: scale(0);}
+}
+@keyframes aim {
+    from { transform: rotate(-30deg); }
+    to { transform: rotate(30deg); }
+}
+@keyframes explode {
+    0% { transform: scale(0);}
+    20% { transform: scale(1.2);}
+    100% { transform: scale(0);}
+}
+
+*::selection {
+    background-color: transparent;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+body {
+    background-image: url(./Assets/background.jpg);
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.color-red {
+    fill: #f14a4a;
+}
+.color-white {
+    fill: #EDEBED;
+}
+
+.container-header {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 0 32px;
+    z-index: 1000;
+}
+.container-header > .container-hearts {
+    display: inline-flex;
+}
+.container-header > .container-hearts > svg {
+    margin-right: 8px;
+}
+.container-header > .container-hearts > svg:last-child() {
+    margin-right: 0px;
+}
+.container-header > .container-time {
+    width: 30vw;
+    height: 8px;
+    border-radius: 9px;
+    position: relative;
+    border: 5px solid #000;
+    background-color: #EDEBED;
+}
+.container-header > .container-time > .time-active {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 4px;
+    background-color: #2E7ADD;
+    transition: width 1s linear;
+}
+.container-header > #score {
+    font-size: 40px;
+    font-weight: bolder;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: #EDEBED;
+    -webkit-text-stroke: 1px #000;
+}
+
+#hunter {
+    width: 215px;
+    height: 550px;
+    position: fixed;
+    bottom: -550px;
+    right: 25vw;
+    z-index: 500;
+    transition: all 500ms linear;
+}
+#hunter-body {
+    position: absolute;
+    height: 550px;
+    width: 215px;
+    bottom: 0;
+    right: 0;
+}
+#hunter-weapon {
+    position: absolute;
+    bottom: 100px;
+    right: 70px;
+    transform-origin: 95% 60%;
+    animation: aim 1s linear 0s infinite alternate;
+}
+
+.container-bird {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    transition: left 100ms linear , top .5s linear ;
+}
+.container-bird svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 50% 50%;
+    overflow: visible;
+}
+#explosion {
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    transform-origin: 50% 50%;
+    transform: scale(0);
+    animation: explode 1s linear 0s 1 normal forwards;
+}
+
+#net {
+    width: 200px;
+    height: 200px;
+    transform-origin: 50% 100%;
+    animation: scaleDown 300ms linear 0s 1 normal forwards;
+    z-index: 1000;
+}
+
+.anim-flying {
+    animation: flying 500ms linear 0s infinite alternate;
+    transform-origin: 0% 50%;
+}
+
+#overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0 , 0 , 0 , 0.6);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10vh 20vw;
+}
+#overlay > h1 {
+    font-size: 120px;
+    margin-bottom: 64px;
+    color: whitesmoke;
+}
+#overlay > p {
+    font-size: 24px;
+    color: whitesmoke;
+    margin-bottom: 64px;
+}
+#overlay > #btn-start {
+    font-size: 24px;
+    width: 200px;
+    height: 64px;
+    border-radius: 8px;
+    color: whitesmoke;
+    background-color: #2E7ADD;
+    border: none;
+}
+
+.display-none {
+    display: none !important;
+}
